@@ -1,0 +1,67 @@
+<h2>Мои работы</h2>
+
+<div class="toolbar">
+    <div>
+        <strong>Назначенные заявки: <%= requests.length %></strong>
+    </div>
+</div>
+
+<% if (requests.length > 0) { %>
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>№ заявки</th>
+                <th>Дата создания</th>
+                <th>Клиент</th>
+                <th>Оборудование</th>
+                <th>Проблема</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% requests.forEach(request => { %>
+            <tr>
+                <td>
+                    <strong><%= request.request_number %></strong>
+                </td>
+                <td>
+                    <%= new Date(request.start_date).toLocaleDateString('ru-RU') %>
+                </td>
+                <td>
+                    <div><%= request.client_name %></div>
+                    <div style="font-size: 12px; color: #6c757d;"><%= request.client_phone %></div>
+                </td>
+                <td>
+                    <div><strong><%= request.type_name %></strong></div>
+                    <div style="font-size: 12px; color: #6c757d;"><%= request.model_name %></div>
+                </td>
+                <td>
+                    <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" 
+                         title="<%= request.problem_description %>">
+                        <%= request.problem_description %>
+                    </div>
+                </td>
+                <td>
+                    <span class="badge" style="background-color: <%= request.status_color %>;">
+                        <%= request.status_name %>
+                    </span>
+                </td>
+                <td>
+                    <a href="/requests/<%= request.request_id %>" class="btn btn-info btn-sm">
+                        Работать
+                    </a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<% } else { %>
+<div style="text-align: center; padding: 60px 20px;">
+    <div style="font-size: 64px; margin-bottom: 20px; color: #6c757d;">⚒</div>
+    <h3 style="color: #6c757d; margin-bottom: 15px;">Нет назначенных работ</h3>
+    <p style="color: #6c757d;">Заявки будут появляться здесь после назначения оператором</p>
+</div>
+<% } %>
